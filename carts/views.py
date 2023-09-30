@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 from products.models import Product
 from . models import Cart, CartItem
@@ -12,8 +13,9 @@ def _cart_id(request):
     return cart
 
 def add_to_cart(request, product_id):
-    # Get the product
+    # Get the product first
     product = Product.objects.get(id=product_id)
+    
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
         
@@ -37,7 +39,29 @@ def add_to_cart(request, product_id):
                 cart=cart
                 )
             cart_item.save()
-    return redirect ('cart')
+        
+    return render(request,'store/product_detail.html')
             
-def cart(request):
-    return render(request, 'carts/cart.html')
+def cart(request, total=0, quantity=0, cart_items=None):
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+        
+        # loop through cart_items
+        for cart_item in cart_items:
+            total += (cart_item.product.price * cart_item.quantity)
+            quantity += cart_item.quantity
+        tax = (2 * total) /100
+        grand_total = total + tax
+        
+    except ObjectDoesNotExist:
+        pass
+    context = {
+        'total': total,
+        'quantity': quantity,
+        'cart_items': cart_items,
+        'tax': tax,
+        'grand_total': grand_total,
+        
+    }
+    return render(request, 'carts/cart.html', context)
