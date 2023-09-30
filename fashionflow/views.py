@@ -1,16 +1,18 @@
 from django.shortcuts import render
 
+from products.models import Product
+from category.models import Category
 
 def homepage(request):
-    # products = Product.objects.all().filter(is_available=True).order_by('created_date')
+    categories = Category.objects.all().order_by('category_name')
 
     # #Get the review rating
     # for product in products:
     #     reviews = ReviewRating.objects.filter(product_id=product.id, status=True)
     
-    # context = {
-    #     'products': products,
-    #     'reviews': reviews,
-    # }
+    context = {
+        'categories': categories,
+        
+    }
 
-    return render(request, 'core/homepage.html',)
+    return render(request, 'core/homepage.html', context)
