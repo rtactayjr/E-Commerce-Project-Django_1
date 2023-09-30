@@ -29,8 +29,8 @@ class Product(models.Model):
     # related_products = models.ManyToManyField('self', blank=True, related_name='related_products')
     # tags = models.ManyToManyField('Tag', blank=True)
 
-    def get_url(self):
-        return reverse('product_detail', args=[self.category.slug, self.slug])
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[self.category.category_slug, self.slug])
 
     def __str__(self):
         return self.product_name
