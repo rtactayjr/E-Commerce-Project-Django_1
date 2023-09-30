@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'category',
     'accounts',
+    'products',
+    'store',
 ]
 
 MIDDLEWARE = [
@@ -130,7 +132,7 @@ STATICFILES_DIRS = [
     'fashionflow/static',
 ]
 
-#media files configuration
+# Media files configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
