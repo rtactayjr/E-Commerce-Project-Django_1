@@ -45,7 +45,7 @@
 					<li class="dropdown cart-nav dropdown-slide">
                         
                         <a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-                            class=""><ion-icon name="heart-circle-outline"></ion-icon></i>Favorites</a>
+                            class="tf-ion-ios-heart"></i>Favorites</a>
 
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
 								class="tf-ion-android-cart"></i>Cart</a>
@@ -146,14 +146,13 @@
 
 					<!-- Home -->
 					<li class="dropdown ">
-						<a href="">Home</a>
+						<a href="{% url 'homepage' %}">Home</a>
 					</li><!-- / Home -->
 
 
 					<!-- Elements -->
-					<li class="dropdown dropdown-slide">
-						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-							role="button" aria-haspopup="true" aria-expanded="false">Shop</a>
+					<li class="dropdown">
+						<a href="{% url 'store' %}">Store</a>
 					</li><!-- / Elements -->
 
 
@@ -163,12 +162,11 @@
 							role="button" aria-haspopup="true" aria-expanded="false">Categories <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="">Men's Clothing</a></li>
-							<li><a href="">Women's Clothing</a></li>
-							<li><a href="">Footwear</a></li>
-							<li><a href="">Accessories</a></li>
-							<li><a href="">Kids and Infants</a></li>
-                            <li><a href="">Undergarments and Lingerie</a></li>
+							<li><a href="{% url 'store' %}"><b>All Products</b></a>
+
+							{% for category in links %}
+							<li><a href="{{ category.get_absolute_url }}">{{ category.category_name }}</a></li>
+							{% endfor %}
 						</ul>
 					</li><!-- / Blog -->
 
