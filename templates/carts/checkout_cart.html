@@ -1,0 +1,135 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class="page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content">
+					<h1 class="page-name">Checkout</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="page-wrapper">
+   <div class="checkout shopping">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-8">
+               <div class="block billing-details">
+                  <div class="product-list">
+                     <form method="post">
+                       <table class="table">
+                         <thead>
+                           <tr>
+                             <th class="">Item Name</th>
+                             <th class="">Variation</th>
+                             <th class="">Item Price</th>
+                             <th class="">Quantity</th>
+                             <th class="">Actions</th>
+                           </tr>
+                         </thead>
+       
+                         <tbody>
+                           {% for cart_item in cart_items %}
+                           <tr class="">
+                               <td class="">
+                                   <div class="product-info">
+                                   <img width="80" src="{{cart_item.product.images.url}}" alt="" />
+                                   <a href="{{cart_item.product.get_absolute_url}}">{{cart_item.product.product_name}}</a>
+                                   </div>
+                               </td>
+       
+                               <td class="">
+                                 <p>Color: Blue</p>
+                                 <p>Size: Small </p>
+                               </td>
+       
+                               <td class="">
+                                 <p>Php:{{cart_item.sub_total}}</p>
+                                 <p>Php:{{cart_item.product.price}} each</p>
+                               </td>
+       
+                               <td class="">{{cart_item.quantity}} </td>
+                   
+                               <td class=""> <a class="product-remove" href="#!">Remove</a></td>
+                           </tr>
+                         </tbody>
+                         {% endfor %}
+                       </table>
+                       <hr>
+                     </form>
+                   </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+               <div class="product-checkout-details">
+                  <div class="block">
+                     <h4 class="widget-title">Order Summary</h4>
+                    
+                     {% for cart_item in cart_items %}
+                     <div class="media product-card">
+                        <a class="pull-left" href="product-single.html">
+                           <img class="media-object" src="{{cart_item.product.images.url}}" alt="Image" />
+                        </a>
+                        <div class="media-body">
+                           <h4 class="media-heading"><a href="product-single.html">{{cart_item.product.product_name}}</a></h4>
+                           <p class="price">1 x Php:{{cart_item.product.price}}</p>
+                           <span class="remove" >Remove</span>
+                        </div>
+                     </div>
+                     {% endfor %}
+
+                     <div class="discount-code">
+                        <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
+                     </div>
+                     <ul class="summary-prices">
+                        <li>
+                           <span>Subtotal:</span>
+                           <span class="price">$190</span>
+                        </li>
+                        <li>
+                           <span>Shipping:</span>
+                           <span>Free</span>
+                        </li>
+                     </ul>
+                     <div class="summary-total">
+                        <span>Total</span>
+                        <span>$250</span>
+                     </div>
+                     <div class="verified-icon">
+                        <img src="{% static 'images/shop/verified.png' %}">
+                     </div>
+                     <div class="verified-icon">
+                        <a href="checkout.html" class="btn btn-main pull-left">Checkout</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+   <!-- Modal -->
+   <div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-body">
+               <form>
+                  <div class="form-group">
+                     <input class="form-control" type="text" placeholder="Enter Coupon Code">
+                  </div>
+                  <button type="submit" class="btn btn-main">Apply Coupon</button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+
+{% endblock %}

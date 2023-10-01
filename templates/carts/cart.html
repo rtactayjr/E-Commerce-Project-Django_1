@@ -18,50 +18,102 @@
 
 
 <div class="page-wrapper">
-  <div class="cart shopping">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="block">
-            <div class="product-list">
-              <form method="post">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th class="">Item Name</th>
-                      <th class="">Item Price</th>
-                      <th class="">Quantity</th>
-                      <th class="">Actions</th>
-                    </tr>
-                  </thead>
+  <div class="checkout shopping">
+     <div class="container">
+        <div class="row">
+           <div class="col-md-8">
+              <div class="block billing-details">
+                 <div class="product-list">
+                    <form method="post">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="">Item Name</th>
+                            <th class="">Variation</th>
+                            <th class="">Item Price</th>
+                            <th class="">Quantity</th>
+                            <th class="">Actions</th>
+                          </tr>
+                        </thead>
+      
+                        <tbody>
+                          {% for cart_item in cart_items %}
+                          <tr class="">
+                              <td class="">
+                                  <div class="product-info">
+                                  <img width="80" src="{{cart_item.product.images.url}}" alt="" />
+                                  <a href="{{cart_item.product.get_absolute_url}}">{{cart_item.product.product_name}}</a>
+                                  </div>
+                              </td>
+      
+                              <td class="">
+                                <p>Color: Blue</p>
+                                <p>Size: Small </p>
+                              </td>
+      
+                              <td class="">
+                                <p>Php:{{cart_item.sub_total}}</p>
+                                <p>Php:{{cart_item.product.price}} each</p>
+                              </td>
+      
+                              <td class="">{{cart_item.quantity}} </td>
+                  
+                              <td class=""> <a class="product-remove" href="#!">Remove</a></td>
+                          </tr>
+                        </tbody>
+                        {% endfor %}
+                      </table>
+                      <hr>
+                    </form>
+                  </div>
+              </div>
+           </div>
 
-                  <tbody>
-                    {% for cart_item in cart_items %}
-                    <tr class="">
-                        <td class="">
-                            <div class="product-info">
-                            <img width="80" src="{{cart_item.product.images.url}}" alt="" />
-                            <a href="#!">{{cart_item.product.product_name}}</a>
-                            </div>
-                        </td>
-                        <td class="">Php:{{cart_item.product.price}}</td>
-
-                        <td class="">{{cart_item.quantity}} </td>
-            
-                        <td class=""> <a class="product-remove" href="#!">Remove</a></td>
-                    </tr>
-                  </tbody>
-                  {% endfor %}
-                </table>
-                <hr>
-                <a href="checkout.html" class="btn btn-main pull-left">Checkout</a>
-              </form>
-            </div>
-          </div>
+           <div class="col-md-4">
+              <div class="product-checkout-details">
+                 <div class="block">
+                    <h4 class="widget-title">Order Summary</h4>
+                   
+                    {% comment %} {% for cart_item in cart_items %}
+                    <div class="media product-card">
+                       <a class="pull-left" href="product-single.html">
+                          <img class="media-object" src="{{cart_item.product.images.url}}" alt="Image" />
+                       </a>
+                       <div class="media-body">
+                          <h4 class="media-heading"><a href="product-single.html">{{cart_item.product.product_name}}</a></h4>
+                          <p class="price">1 x Php:{{cart_item.product.price}}</p>
+                          <span class="remove" >Remove</span>
+                       </div>
+                    </div>
+                    {% endfor %} {% endcomment %}
+                    <ul class="summary-prices">
+                       <li>
+                          <span>Total price:</span>
+                          <span class="price">Php: {{total}}</span>
+                       </li>
+                       <li>
+                          <span>Tax:</span>
+                          <span>{{tax}}</span>
+                       </li>
+                    </ul>
+                    <div class="summary-total">
+                       <span>Total</span>
+                       <span>Php: {{grand_total}}</span>
+                    </div>
+                    <div class="discount-code">
+                      <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
+                   </div>
+                    <div class="verified-icon">
+                       <img src="{% static 'images/shop/verified.png' %}">
+                    </div>
+                    <div class="verified-icon">
+                       <a href="checkout.html" class="btn btn-main pull-left">Checkout</a>
+                    </div>
+                 </div>
+              </div>
+           </div>
         </div>
-        
-      </div>
-    </div>
+     </div>
   </div>
 </div>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 
 from products.models import Product
 from . models import Cart, CartItem
@@ -13,34 +14,31 @@ def _cart_id(request):
     return cart
 
 def add_to_cart(request, product_id):
+    
     # Get the product first
     product = Product.objects.get(id=product_id)
-    
     try:
-        cart = Cart.objects.get(cart_id=_cart_id(request))
-        
+        cart = Cart.objects.get(cart_id=_cart_id(request)) 
     except Cart.DoesNotExist:
-        
         cart = Cart.objects.create(
-            cart_id=_cart_id(request),
+            cart_id = _cart_id(request),
         )
         
-        cart.save()
+    cart.save()
         
         # Put product inside the cart (combine product with cart)
-        try:
-            cart_item = CartItem.objects.get(product=product, cart=cart)
-            cart_item.quantity += 1
-            cart_item.save()
-        except CartItem.DoesNotExist:
-            cart_item = CartItem.objects.create(
-                product=product, 
-                quantity=1, 
-                cart=cart
-                )
-            cart_item.save()
-        
-    return render(request,'store/product_detail.html')
+    try:
+        cart_item = CartItem.objects.get(product=product, cart=cart)
+        cart_item.quantity += 1
+        cart_item.save()
+    except CartItem.DoesNotExist:
+        cart_item = CartItem.objects.create(
+            product=product, 
+            quantity=1, 
+            cart=cart
+            )
+        cart_item.save()
+    return redirect('cart')
             
 def cart(request, total=0, quantity=0, cart_items=None):
     try:
@@ -56,12 +54,16 @@ def cart(request, total=0, quantity=0, cart_items=None):
         
     except ObjectDoesNotExist:
         pass
+    
     context = {
         'total': total,
         'quantity': quantity,
         'cart_items': cart_items,
         'tax': tax,
-        'grand_total': grand_total,
-        
+        'grand_total': grand_total,       
     }
+    
     return render(request, 'carts/cart.html', context)
+
+# def checkout_cart(request):
+#     return render(request, 'carts/checkout_cart.html')
