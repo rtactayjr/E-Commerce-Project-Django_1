@@ -115,18 +115,16 @@
 						</select>
 					</div>
 
-					<div class="product-quantity">
+					{% comment %} <div class="product-quantity">
 						<span>Quantity:</span>
 						<div class="product-quantity-slider">
 							<input id="product-quantity" type="text" value="0" name="product-quantity">
 						</div>
-					</div>
+					</div> {% endcomment %}
 
 					<div class="product-category">
 						<span>Categories:</span>
-						<ul>
-							<li><a href="#" >{{single_product.category}}</a></li>
-						</ul>
+						<a href="#" >{{single_product.category}}</a>
 					</div>
                     {% if single_product.stock <= 0 %}
                     <h5 class="text-danger mt-20"><b>Out of Stock.</b></h5>

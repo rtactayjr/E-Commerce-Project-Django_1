@@ -37,33 +37,43 @@
                         </thead>
       
                         <tbody>
-                          {% for cart_item in cart_items %}
-                          <tr class="">
-                              <td class="">
-                                  <div class="product-info">
-                                  <img width="80" src="{{cart_item.product.images.url}}" alt="" />
-                                  <a href="{{cart_item.product.get_absolute_url}}">{{cart_item.product.product_name}}</a>
-                                  </div>
-                              </td>
-      
-                              <td class="">
-                                <p>Color: Blue</p>
-                                <p>Size: Small </p>
-                              </td>
-      
-                              <td class="">
-                                <p>Php:{{cart_item.sub_total}}</p>
-                                <p>Php:{{cart_item.product.price}} each</p>
-                              </td>
-      
-                              <td class="">{{cart_item.quantity}} </td>
-                  
-                              <td class=""> <a class="product-remove" href="#!">Remove</a></td>
-                          </tr>
+                           {% for cart_item in cart_items %}
+                           <tr class="">
+                                 <td class="">
+                                    <div class="product-info">
+                                    <img width="80" src="{{cart_item.product.images.url}}" alt="" />
+                                    <a href="{{cart_item.product.get_absolute_url}}">{{cart_item.product.product_name}}</a>
+                                    </div>
+                                 </td>
+         
+                                 <td class="">
+                                 <p>Color: Blue</p>
+                                 <p>Size: Small </p>
+                                 </td>
+         
+                                 <td class="">
+                                 <p><b>Php:{{cart_item.sub_total}}</b></p>
+                                 <p style="font-size:small;">Php:{{cart_item.product.price}} each</p>
+                                 </td>
+         
+                                 <td>
+                                    <div class="single-product-details">
+                                        <div class="product-quantity">
+                                            <div class="product-quantity-slider">
+                                                <a href="{% url 'add_to_cart' cart_item.product.id %}"><input id="product-quantity" type="text" value="{{cart_item.quantity}}" name="product-quantity"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                                 <td class=""> 
+                                    <a class="product-remove" href="#!">Remove</a>
+                                 </td>
+                           </tr>
                         </tbody>
-                        {% endfor %}
-                      </table>
-                      <hr>
+                           {% endfor %}
+                        </table>
+                     <hr>
                     </form>
                   </div>
               </div>
