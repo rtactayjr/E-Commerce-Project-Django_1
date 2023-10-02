@@ -54,27 +54,19 @@
 					{% comment %} product starts here  {% endcomment %}
 					{% for product in products %}
 					<div class="col-md-4">
+						
 						<div class="product-item">
-							<div class="product-thumb">
-								{% comment %} <span class="bage">Sale</span> {% endcomment %}
-								<img class="img-responsive" src="{{product.images.url}}" alt="product-img" style="width:263px; height:315px;"/>
-								<div class="preview-meta">
-									<ul>
-										<li>
-											<a href="{{product.get_absolute_url}}" ><i class="tf-ion-ios-search-strong"></i></a>
-										</li>
-										<li>
-											<a href="#!" ><i class="tf-ion-ios-heart"></i></a>
-										</li>
-										<li>
-											<a href="#!"><i class="tf-ion-android-cart"></i></a>
-										</li>
-									</ul>
+							<a href="{{product.get_absolute_url}}" >
+								<div class="product-thumb">
+									{% comment %} <span class="bage">Sale</span> {% endcomment %}
+									<img class="img-responsive" src="{{product.images.url}}" alt="product-img" style="width:263px; height:315px;"/>
 								</div>
-							</div>
-							<div class="product-content">
+							</a>
+
+
+							<div class="product-content" style="text-align: left;">
 								<h4><a href="{{product.get_absolute_url}}">{{product.product_name}}</a></h4>
-								<p class="price">Php:{{product.price}}</p>
+								<h4 class="price">Php:{{product.price}}</h4>
 							</div>
 						</div>
 					</div>

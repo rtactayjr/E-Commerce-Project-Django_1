@@ -992,13 +992,11 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
   display: inline-block;
 }
 .product-item .product-thumb .preview-meta li a, .product-item .product-thumb .preview-meta li span {
-  background: #fff;
-  padding: 10px 0px;
+  /* background: #fff; */
   cursor: pointer;
   display: inline-block;
-  font-size: 20px;
+  font-size: 15px;
   transition: 0.2s all;
-  width: 50px;
 }
 .product-item .product-thumb .preview-meta li a:hover, .product-item .product-thumb .preview-meta li span:hover {
   background: #000;
