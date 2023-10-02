@@ -57,7 +57,9 @@
                                  </td>
          
                                  <td>
-                                    <div class="value-button" id="decrease">-</div>
+                                    <div class="value-button" id="decrease">
+                                       <a href="{% url 'remove_from_cart' cart_item.product.id %}">-</a>
+                                    </div>
 
                                     <input type="number" id="number" value="{{cart_item.quantity}}"/>
                                     
@@ -67,7 +69,7 @@
                                 </td>
                                 
                                  <td class=""> 
-                                    <a class="product-remove" href="#!">Remove</a>
+                                    <a class="product-remove" href="{% url 'remove_cart_item' cart_item.product.id %}">Remove</a>
                                  </td>
                            </tr>
                         </tbody>
