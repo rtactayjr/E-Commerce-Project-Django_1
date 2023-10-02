@@ -54,14 +54,7 @@
 
 
   // e-commerce touchspin
-  $('input[name=\'product-quantity\']').TouchSpin(
-    {
-      min: 0,
-      max: 1000000000,
-      stepinterval: 50,
-      maxboostedstep: 10000000,
-  }
-  );
+  $('input[name=\'product-quantity\']').TouchSpin();
 
 
   // Video Lightbox
@@ -96,3 +89,12 @@
 
 
 })(jQuery);
+
+$('.add').click(function () {		
+  var th = $(this).closest('.wrap').find('.count');    	
+  th.val(+th.val() + 1);
+});
+$('.sub').click(function () {
+  var th = $(this).closest('.wrap').find('.count');    	
+    	if (th.val() > 1) th.val(+th.val() - 1);
+});

@@ -57,12 +57,12 @@
                                  </td>
          
                                  <td>
-                                    <div class="single-product-details">
-                                        <div class="product-quantity">
-                                            <div class="product-quantity-slider">
-                                                <a href="{% url 'add_to_cart' cart_item.product.id %}"><input id="product-quantity" type="text" value="{{cart_item.quantity}}" name="product-quantity"></a>
-                                            </div>
-                                        </div>
+                                    <div class="value-button" id="decrease">-</div>
+
+                                    <input type="number" id="number" value="{{cart_item.quantity}}"/>
+                                    
+                                    <div class="value-button" id="increase"  >
+                                       <a href="{% url 'add_to_cart' cart_item.product.id %}">+</a>
                                     </div>
                                 </td>
                                 
