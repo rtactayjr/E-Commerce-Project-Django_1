@@ -65,15 +65,36 @@
 
 
 							<div class="product-content" style="text-align: left;">
-								<h4><a href="{{product.get_absolute_url}}">{{product.product_name}}</a></h4>
-								<h4 class="price">Php:{{product.price}}</h4>
+								<h5><a href="{{product.get_absolute_url}}">{{product.product_name}}</a></h4>
+								<h5 class="price">Php:{{product.price}}</h4>
 							</div>
+							<a href="{{ product.get_absolute_url }}" class="btn btn-block btn-primary">View Details</a>
 						</div>
 					</div>
 					{% endfor %}
 
 				</div>				
 			</div>
+
+			<div class="text-center">
+				<ul class="pagination post-pagination">
+					<li><a href="#!">Prev</a>
+					</li>
+					<li class="active"><a href="#!">1</a>
+					</li>
+					<li><a href="#!">2</a>
+					</li>
+					<li><a href="#!">3</a>
+					</li>
+					<li><a href="#!">4</a>
+					</li>
+					<li><a href="#!">5</a>
+					</li>
+					<li><a href="#!">Next</a>
+					</li>
+				</ul>
+			</div>
+			
 		</div>
 	</div>
 </section>
