@@ -9,7 +9,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content">
-					<h1 class="page-name">Store</h1>
+					{% if 'search' in request.path %}
+						<h1 class="page-name">Search Results </h1>
+					{% else %}
+						<h1 class="page-name">Store</h1>
+					{% endif %}
 				</div>
 				<p>Found Items: {{product_count}}</p>
 			</div>
@@ -51,7 +55,7 @@
 			<div class="col-md-9">
 				<div class="row">
 
-					{% comment %} product starts here  {% endcomment %}
+					{% if products %}
 					{% for product in products %}
 					<div class="col-md-4">
 						
@@ -72,7 +76,9 @@
 						</div>
 					</div>
 					{% endfor %}
-
+					{% else %}
+					<div style="text-align:center;"><h3 class="text-danger"> No results found, Please try again. </h3></div>
+					{% endif %}
 				</div>				
 			</div>
 
