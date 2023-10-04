@@ -85,7 +85,7 @@
                                 </td>
                                 
                                  <td class=""> 
-                                    <a class="product-remove" href="{% url 'remove_cart_item' cart_item.product.id %}">Remove</a>
+                                    <a class="product-remove text-danger" href="{% url 'remove_cart_item' cart_item.product.id %}"><strong>Remove</strong></a>
                                  </td>
                            </tr>
                            {% endfor %}
