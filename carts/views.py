@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 
-from products.models import Product
+from products.models import Product, Variation
 from . models import Cart, CartItem
 
 # Create your views here.
@@ -14,11 +14,24 @@ def _cart_id(request):
     return cart
 
 def add_to_cart(request, product_id):
-    
-    # Get the product first
     product = Product.objects.get(id=product_id)
+    product_variation = []
+    
+    # Check the variation from POST
+    if request.method == 'POST':
+        for item in request.POST:
+            key = item
+            value = request.POST[key]
+            
+            try:
+                variation = Variation.objects.get(product=product, variation_category__iexact=key, variation_value__iexact=value)
+                product_variation.append(variation)
+            except:
+                pass
+
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request)) 
+        
     except Cart.DoesNotExist:
         cart = Cart.objects.create(
             cart_id = _cart_id(request),
@@ -26,7 +39,7 @@ def add_to_cart(request, product_id):
         
     cart.save()
         
-        # Put product inside the cart (combine product with cart)
+    # Put product inside the cart (combine product with cart)
     try:
         cart_item = CartItem.objects.get(product=product, cart=cart)
         cart_item.quantity += 1

@@ -5,21 +5,6 @@
 {% block content %}
 <section class="single-product">
 	<div class="container">
-		{% comment %} <div class="row">
-			<div class="col-md-6">
-				<ol class="breadcrumb">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="shop.html">Shop</a></li>
-					<li class="active">Single Product</li>
-				</ol>
-			</div>
-			<div class="col-md-6">
-				<ol class="product-pagination text-right">
-					<li><a href="blog-left-sidebar.html"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
-					<li><a href="blog-left-sidebar.html">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
-				</ol>
-			</div>
-		</div> {% endcomment %}
 		<div class="row mt-20">
 			<div class="col-md-5">
 				<div class="single-product-slider">
@@ -85,61 +70,57 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="col-md-7">
-				<div class="single-product-details">
-					<h2>{{single_product.product_name}}</h2>
-					<p class="product-price">Php{{single_product.price}}</p>
-					
-					<p class="product-description mt-20">{{single_product.description}}</p>
-					<div class="color-swatches">
-						<span>color:</span>
-						<ul>
-							<li>
-								<a href="#!" class="swatch-violet"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-black"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-cream"></a>
-							</li>
-						</ul>
-					</div>
-					<div class="product-size">
-						<span>Size:</span>
-						<select class="form-control">
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
-						</select>
-					</div>
+				<form action="{% url 'add_to_cart' single_product.id %}" method="POST">
+					{% csrf_token %}
+					<div class="single-product-details">
+						<h2>{{single_product.product_name}}</h2>
+						<p class="product-price">Php{{single_product.price}}</p>
+						
+						<p class="product-description mt-20">Description: {{single_product.description}}</p>
 
-					{% comment %} <div class="product-quantity">
-						<span>Quantity:</span>
-						<div class="product-quantity-slider">
-							<input id="product-quantity" type="text" value="0" name="product-quantity">
+						<div class="product-size" class="form-control" >
+							<span>Color:</span>
+							<select name="color" required>
+								<option value="" disabled selected></option>
+								{% for i in single_product.variation_set.colors %}
+								<option value="{{i.variation_value | lower }}">{{i.variation_value | capfirst }}</option>
+								{% endfor %}
+							</select>
 						</div>
-					</div> {% endcomment %}
 
-					<div class="product-category">
-						<span>Categories:</span>
-						<a href="#" >{{single_product.category}}</a>
-					</div>
-                    {% if single_product.stock <= 0 %}
-                    <h5 class="text-danger mt-20"><b>Out of Stock.</b></h5>
-                    {% else %}
-						{% if in_cart %}
-						<a href="#" class="btn btn-success mt-20">Already Added</a>
-						<a href="{% url 'cart' %}" class="btn btn-dark mt-20">View Cart</a>
+						<div class="product-size">
+							<span>Size:</span>
+							<select name="color" required>
+								<option value="" disabled selected></option>
+								{% for i in single_product.variation_set.sizes %}
+								<option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst }}</option>
+								{% endfor %}
+							</select>
+						</div>
 
+						<div class="product-category">
+							<span>Categories:</span>
+							<a href="#" >{{single_product.category}}</a>
+						</div>
+
+						{% if single_product.stock <= 0 %}
+						<h5 class="text-danger mt-20"><b>Out of Stock.</b></h5>
 						{% else %}
-					<a href="{% url 'add_to_cart' single_product.id %}" class="btn btn-main mt-20">Add To Cart</a>
+							{% if in_cart %}
+							<a href="#" class="btn btn-success mt-20">Already Added</a>
+							<a href="{% url 'cart' %}" class="btn btn-dark mt-20">View Cart</a>
+
+							{% else %}
+							<button type="submit" class="btn btn-main mt-20">Add To Cart</button>
+							{% endif %}
 						{% endif %}
-                    {% endif %}
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="tabCommon mt-20">
