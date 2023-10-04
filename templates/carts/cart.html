@@ -41,7 +41,7 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th class="">Item Name</th>
+                            <th class="" style="text-align: center;">Item</th>
                             <th class="">Variation</th>
                             <th class="">Item Price</th>
                             <th class="">Quantity</th>
@@ -60,8 +60,11 @@
                                  </td>
          
                                  <td class="">
-                                 <p>Color: Blue</p>
-                                 <p>Size: Small </p>
+                                 {% if cart_item.variations.all %}
+                                       {% for item in cart_item.variations.all %}
+                                          {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst}} <br>
+                                       {% endfor %}
+                                 {% endif %}
                                  </td>
          
                                  <td class="">
@@ -100,7 +103,7 @@
                  <div class="block">
                     <h4 class="widget-title">Order Summary</h4>
                    
-                    {% comment %} {% for cart_item in cart_items %}
+                     {% for cart_item in cart_items %}
                     <div class="media product-card">
                        <a class="pull-left" href="product-single.html">
                           <img class="media-object" src="{{cart_item.product.images.url}}" alt="Image" />
@@ -111,7 +114,8 @@
                           <span class="remove" >Remove</span>
                        </div>
                     </div>
-                    {% endfor %} {% endcomment %}
+                    {% endfor %} 
+
                     <ul class="summary-prices">
                        <li>
                           <span>Total price:</span>

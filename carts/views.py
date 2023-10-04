@@ -14,6 +14,7 @@ def _cart_id(request):
     return cart
 
 def add_to_cart(request, product_id):
+    
     product = Product.objects.get(id=product_id)
     product_variation = []
     
@@ -22,7 +23,7 @@ def add_to_cart(request, product_id):
         for item in request.POST:
             key = item
             value = request.POST[key]
-            
+     
             try:
                 variation = Variation.objects.get(product=product, variation_category__iexact=key, variation_value__iexact=value)
                 product_variation.append(variation)
@@ -30,27 +31,37 @@ def add_to_cart(request, product_id):
                 pass
 
     try:
-        cart = Cart.objects.get(cart_id=_cart_id(request)) 
-        
+        cart = Cart.objects.get(cart_id = _cart_id(request)) 
+
     except Cart.DoesNotExist:
-        cart = Cart.objects.create(
-            cart_id = _cart_id(request),
-        )
+        cart = Cart.objects.create(cart_id = _cart_id(request))
         
     cart.save()
         
     # Put product inside the cart (combine product with cart)
     try:
         cart_item = CartItem.objects.get(product=product, cart=cart)
+        if len(product_variation) > 0:
+            cart_item.variations.clear()
+            for item in product_variation:
+                cart_item.variations.add(item)
+            
         cart_item.quantity += 1
         cart_item.save()
+        
     except CartItem.DoesNotExist:
         cart_item = CartItem.objects.create(
             product=product, 
             quantity=1, 
             cart=cart
-            )
+        )
+        if len(product_variation) > 0:
+            cart_item.variations.clear()
+            for item in product_variation:
+                cart_item.variations.add(item)
+                
         cart_item.save()
+        
     return redirect('cart')
 
 def remove_from_cart(request,product_id,):
