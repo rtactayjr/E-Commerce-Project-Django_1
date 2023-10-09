@@ -16,8 +16,9 @@ def _cart_id(request):
 def add_to_cart(request, product_id):
     
     product = Product.objects.get(id=product_id)
-    product_variation = []
     
+    product_variation = []
+
     # Check the variation from POST
     if request.method == 'POST':
         for item in request.POST:
@@ -117,7 +118,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         grand_total = 0
         
         cart = Cart.objects.get(cart_id=_cart_id(request))
-        cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+        cart_items = CartItem.objects.filter(cart=cart, is_active=True).order_by('-created_date')
         
         # loop through cart_items
         for cart_item in cart_items:
