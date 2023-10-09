@@ -1950,7 +1950,7 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
   background-color: #fff;
   border: 1px solid #dedede;
   padding: 30px;
-  margin: 100px 0;
+  margin: 50px 0;
 }
 .account .block .logo {
   display: inline-block;
@@ -1962,7 +1962,7 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
   font-weight: 400;
   font-size: 25px;
   text-transform: uppercase;
-  margin-top: 40px;
+  /* margin-top: 40px; */
 }
 .account .block form {
   margin-top: 40px;
