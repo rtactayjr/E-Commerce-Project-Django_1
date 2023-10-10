@@ -7,11 +7,9 @@
 <section class="account">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 col-md-offset-3" style="margin-top: -30px;">
           <div class="block text-center">
-            <a class="logo" href="index.html">
-              <img src="images/logo.png" alt="">
-            </a>
+
             <h2 class="text-center">Create Your Account</h2>
             <form class="text-left clearfix" action="{% url 'register' %}" method="POST">
                 {% csrf_token %}
@@ -52,7 +50,6 @@
                     </div> <!-- form-group end.// -->  
                 </div>
                 <div class="form-group">
-
               <!-- Sign in Button -->
               <div class="text-center">
                 <label for=""></label>
@@ -70,5 +67,7 @@
       </div>
     </div>
   </section>
+  {% include 'core/alerts.html' %}
+
   
 {% endblock %}
