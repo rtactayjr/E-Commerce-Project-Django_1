@@ -39,13 +39,12 @@
 				</div>
 			</div>
             
-			<div class="col-md-4 col-xs-12 col-sm-4">
-				<!-- Cart -->
+			<div class="col-md-4 col-xs-10 col-sm-3">
 				<ul class="top-menu text-right list-inline">
 
-					<li class="dropdown cart-nav dropdown-slide">
+					<li>
 						<a href="{% url 'cart' %}">
-							<span class="badge badge-pill badge-danger notify">{{cart_count}} &nbsp;<i class="tf-ion-android-cart">Cart</i></span>
+							<span class="badge">{{cart_count}} &nbsp;<i class="tf-ion-android-cart">Cart</i></span>
 						</a>
 					</li>
  
@@ -60,20 +59,29 @@
 							</li>
 						</ul>
 					</li>
-					<!-- / Search -->
 
-					<!-- Login/Register -->
-					<li class="dropdown dropdown-slide">
-						<a href="{% url 'login' %}">Login</a>
-						<span class="dark-transp">|</span>
-						<a href="{% url 'register' %}">Register</a>
+					{% if user.id is None %}
+					<li>
+						<small class="title text-muted" style="margin-right: 9px;">Welcome guest!</small>
+						<div> 
+							<a href="{% url 'login' %}">Sign in</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'register' %}"> Register</a>
+						</div>
+		
 					</li>
-					<!-- / Login/Register -->
+					{% else %}
+					<li>
+						<small class="title text-muted" style="margin-right: 9px;">Welcome {{ user.first_name }}</small>
+						<div> 
+							<a href="#">Dashboard</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'logout' %}">Logout</a>
+						</div>
+		
+					</li>
 
-					<small class="title text-muted"
-					style="padding-right: 30px;">Welcome guest!</small>
+					{% endif %}
 
-				</ul><!-- / .nav .navbar-nav .navbar-right -->
+				</ul>
 			</div>
 		</div>
 	</div>
