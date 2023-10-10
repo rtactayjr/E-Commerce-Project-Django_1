@@ -58,7 +58,8 @@
                 <label for=""></label>
                 <button type="submit" class="btn btn-main text-center">Sign In</button>
               </div>
-
+            {{ form.email.errors }}
+            {{ form.non_field_errors }}
             </form>
 
             <p class="mt-20">Already hava an account ?<a href="#"> Login</a></p>
