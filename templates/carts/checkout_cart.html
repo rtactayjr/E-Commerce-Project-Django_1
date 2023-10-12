@@ -22,7 +22,7 @@
 				<div class="row">
 
 					<form class="checkout-form" action="#" method="POST">
-						{% csrf_token %}
+					{% csrf_token %}
 
 						<div class="col-md-8">
 							<div class="block billing-details">
@@ -85,54 +85,72 @@
 						</div>
 
 						<div class="col-md-4">
-                     <div class="product-checkout-details">
-                        <div class="block">
-                           <h4 class="widget-title">Order Summary</h4>
+							<div class="product-checkout-details">
+								<div class="block">
+									<h4 class="widget-title">Order Summary</h4>
 
-                           {% for cart_item in cart_items %}
-                           <div class="media product-card">
-                              <a class="pull-left" href="#">
-                                 <img class="media-object" src="{{ cart_item.product.images.url }}" alt="Image" />
-                              </a>
-                              <div class="media-body">
-                                 <h4 class="media-heading"><a href="#">{{ cart_item.product.product_name }}</a></h4>
-                                 <p class="">{{cart_item.quantity}} x {{ cart_item.product.price }} each</p>
-                                 <p class="">
-                                    {% if cart_item.variations.all %}
-                                            {% for item in cart_item.variations.all %}
-                                                {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst}} <br>
-                                            {% endfor %}
-                                    {% endif %}
-                                 </p>
-                                 <span class="remove text-danger" >Remove</span>
-                              </div>
+									{% for cart_item in cart_items %}
+										<div class="media product-card">
+											<a class="pull-left" href="#">
+												<img class="media-object" src="{{ cart_item.product.images.url }}" alt="Image"/>
+											</a>
+											<div class="media-body">
+												<h4 class="media-heading">
+													<a href="#">{{ cart_item.product.product_name }}</a>
+												</h4>
+												<p class="">{{cart_item.quantity}}
+													x
+													{{ cart_item.product.price }}
+													each</p>
+												<p class="">
+													{% if cart_item.variations.all %}
+														{% for item in cart_item.variations.all %}
+															{{ item.variation_category | capfirst }}
+															:
+															{{ item.variation_value | capfirst}}
+															<br>
+														{% endfor %}
+													{% endif %}
+												</p>
+												<span class="remove text-danger">Remove</span>
+											</div>
 
-                           </div>
-                           {% endfor %}
-                           <div class="discount-code">
-                              <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
-                           </div>
-                           <ul class="summary-prices">
-                              <li>
-								<span>Total price:</span>
-								<span class="price">Php: {{total}}</span>
-                              </li>
-                              <li>
-								<span>Tax:</span>
-								<span>{{tax}}</span>
-                              </li>
-                           </ul>
-                           <div class="summary-total">
-								<span>Total</span>
-								<span>Php: {{grand_total}}</span>
-                           </div>
-                           <div class="verified-icon">
-                              <img src="{% static 'images/shop/payments.png'%}">
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+										</div>
+									{% endfor %}
+									<div class="discount-code">
+										<p>Have a discount ?
+											<a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a>
+										</p>
+									</div>
+									<ul class="summary-prices">
+										<li>
+											<span>Total price:</span>
+											<span class="price">Php:
+												{{total}}</span>
+										</li>
+										<li>
+											<span>Tax:</span>
+											<span>{{tax}}</span>
+										</li>
+									</ul>
+									<div class="summary-total">
+										<span>Total</span>
+										<span>Php:
+											{{grand_total}}</span>
+									</div>
+									<div class="verified-icon">
+										<img src="{% static 'images/shop/payments.png'%}">
+									</div>
+									<hr>
+									<div>
+										<button type="submit" name="submit" class="btn btn-primary btn-block" >Place Order</button>
+										<a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+									</div>
+								</div>
 
+							</div>
+
+						</div>
 					</form>
 				</div>
 			</div>
@@ -140,33 +158,33 @@
 	</div>
 
 	<!-- Modal
-		   <div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
-		      <div class="modal-dialog" role="document">
-		         <div class="modal-content">
-		            <div class="modal-body">
-		               <form>
-		                  <div class="form-group">
-		                     <input class="form-control" type="text" placeholder="Enter Coupon Code">
-		                  </div>
-		                  <button type="submit" class="btn btn-main">Apply Coupon</button>
-		               </form>
-		            </div>
-		         </div>
-		      </div>
-		   </div>
-		   div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
-		      <div class="modal-dialog" role="document">
-		         <div class="modal-content">
-		            <div class="modal-body">
-		               <form>
-		                  <div class="form-group">
-		                     <input class="form-control" type="text" placeholder="Enter Coupon Code">
-		                  </div>
-		                  <button type="submit" class="btn btn-main">Apply Coupon</button>
-		               </form>
-		            </div>
-		         </div>
-		      </div>
-		   </div> -->
+			   <div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
+			      <div class="modal-dialog" role="document">
+			         <div class="modal-content">
+			            <div class="modal-body">
+			               <form>
+			                  <div class="form-group">
+			                     <input class="form-control" type="text" placeholder="Enter Coupon Code">
+			                  </div>
+			                  <button type="submit" class="btn btn-main">Apply Coupon</button>
+			               </form>
+			            </div>
+			         </div>
+			      </div>
+			   </div>
+			   div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
+			      <div class="modal-dialog" role="document">
+			         <div class="modal-content">
+			            <div class="modal-body">
+			               <form>
+			                  <div class="form-group">
+			                     <input class="form-control" type="text" placeholder="Enter Coupon Code">
+			                  </div>
+			                  <button type="submit" class="btn btn-main">Apply Coupon</button>
+			               </form>
+			            </div>
+			         </div>
+			      </div>
+			   </div> -->
 
 {% endblock %}
