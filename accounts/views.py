@@ -16,6 +16,8 @@ from carts . models import Cart, CartItem
 from . forms import RegistrationForm
 from . models import Account
 
+import requests
+
 # Create your views here.
 def register(request):
     if request.method == 'POST':
@@ -105,8 +107,19 @@ def login(request):
                 pass
             
             auth.login(request, user)
-            messages.success(request, 'You are now logged in.')
-            return redirect('dashboard')
+            messages.success(request, 'You are now Logged in')
+            url = request.META.get('HTTP_REFERER') #grab the prv url from where the user came
+            try:
+                query = requests.utils.urlparse(url).query
+
+                #next=/cart/checkout
+                params = dict(x.split('=') for x in query.split('&'))
+                if 'next' in params:
+                    nextPage = params['next']
+                    return redirect(nextPage)
+            except:
+                return redirect('dashboard')
+
         else:
             messages.error(request, 'Invalid Login, Try again.')
             return redirect('login')
