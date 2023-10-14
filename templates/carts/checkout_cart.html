@@ -21,7 +21,7 @@
 			<div class="container">
 				<div class="row">
 
-					<form class="checkout-form" action="#" method="POST">
+					<form class="checkout-form" action="{% url 'place_order' %}" method="POST">
 					{% csrf_token %}
 
 						<div class="col-md-8">
