@@ -1,0 +1,128 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class="page-header" style="background: white; padding: 0%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="content">
+                    <h1 class="page-name">Review Order</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="page-wrapper">
+   <div class="checkout shopping">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-8">
+               <div class="block billing-details">
+                  <h4 class="widget-title">Billing Details</h4>
+                 
+                  <div class="card">
+					<div class="card-body">
+						<p class="card-text mb-0">{{order.full_name}}</p>
+						<p class="card-text mb-0">{{order.full_address}}</p>
+						<p class="card-text mb-0">{{order.city}}, {{order.state}}</p>
+						<p class="card-text mb-0">{{order.country}}</p>
+						<p class="card-text mb-0">{{order.email}}</p>
+						<p class="card-text mb-0">{{order.phone}}</p>
+						{% if order.order_note %}
+						<b>Order Note: </b> {{order.order_note}}
+						{% endif %}
+					</div>
+				</div>
+               </div>
+
+               <div class="block">
+                  <h4 class="widget-title">Payment Method</h4>
+                  <div class="checkout-product-details">
+                     <div class="payment">
+                        <div class="card-details">
+                            <div class="card-body">
+                                <p class="card-text">PayPal</p>
+                            </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+            
+            <div class="col-md-4">
+                <div class="product-checkout-details">
+                    <div class="block">
+                        <h4 class="widget-title">Order Summary</h4>
+
+                        {% for cart_item in cart_items %}
+                            <div class="media product-card">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object" src="{{ cart_item.product.images.url }}" alt="Image"/>
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        <a href="#">{{ cart_item.product.product_name }}</a>
+                                    </h4>
+                                    <p class="">{{cart_item.quantity}}
+                                        x
+                                        {{ cart_item.product.price }}
+                                        each</p>
+                                    <p class="">
+                                        {% if cart_item.variations.all %}
+                                            {% for item in cart_item.variations.all %}
+                                                {{ item.variation_category | capfirst }}
+                                                :
+                                                {{ item.variation_value | capfirst}}
+                                                <br>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </p>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                        <div class="discount-code">
+                            <p>Have a discount ?
+                                <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a>
+                            </p>
+                        </div>
+                        <ul class="summary-prices">
+                            <li>
+                                <span>Total price:</span>
+                                <span class="price">Php:
+                                    {{total}}</span>
+                            </li>
+                            <li>
+                                <span>Tax:</span>
+                                <span>{{tax}}</span>
+                            </li>
+                        </ul>
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span>Php:
+                                {{grand_total}}</span>
+                        </div>
+                        <div class="verified-icon">
+                            <img src="{% static 'images/shop/payments.png'%}">
+                        </div>
+                        <hr>
+                        <div>
+                            <button type="submit" name="submit" class="btn btn-primary btn-block" >Place Order</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+         </div>
+      </div>
+   </div>
+</div>
+
+{% endblock %}
