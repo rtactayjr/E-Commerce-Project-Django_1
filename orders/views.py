@@ -34,7 +34,9 @@ def place_order(request, total=0, quantity=0):
         if form.is_valid():
             
             # Store all the billing information inside Order table
+            
             data = Order() # Get the instance of Order class model
+            
             data.user = current_user
             data.first_name = form.cleaned_data['first_name']
             data.last_name = form.cleaned_data['last_name']

@@ -33,6 +33,8 @@
 						<p class="card-text mb-0">{{order.email}}</p>
 						<p class="card-text mb-0">{{order.phone}}</p>
 						{% if order.order_note %}
+                        <br>
+
 						<b>Order Note: </b> {{order.order_note}}
 						{% endif %}
 					</div>
@@ -50,8 +52,10 @@
                         </div>
                      </div>
                   </div>
-               </div>
+                  <br>
+                  <hr>
 
+               </div>
             </div>
             
             <div class="col-md-4">
@@ -112,7 +116,7 @@
                         </div>
                         <hr>
                         <div>
-                            <button type="submit" name="submit" class="btn btn-primary btn-block" >Place Order</button>
+                            <button type="submit" name="submit" class="btn btn-primary btn-block" >Make Payment</button>
                         </div>
                     </div>
 
