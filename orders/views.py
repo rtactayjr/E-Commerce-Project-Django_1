@@ -2,11 +2,16 @@ import datetime
 import json
 
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.http import HttpResponse, JsonResponse
+from django.core.mail import EmailMessage
+
 
 from . forms import OrderForm
-from . models import Order, Payment
+from . models import Order, Payment, OrderedProduct
 
 from carts . models import CartItem, Cart
+from products . models import Product
 
 
 # Create your views here.
@@ -77,6 +82,7 @@ def place_order(request, total=0, quantity=0):
     else:
         return redirect('checkout')
 
+
 def payments(request):
     body = json.loads(request.body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
@@ -95,8 +101,77 @@ def payments(request):
     order.is_ordered = True
     order.save()
     
-    return render(request, 'orders/payments.html')
+    # Move the cart items to Order Product table
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    for item in cart_items:
+        ordereproduct = OrderedProduct()
+        ordereproduct.order_id = order.id
+        ordereproduct.payment = payment
+        ordereproduct.user_id = request.user.id
+        ordereproduct.product_id = item.product_id
+        ordereproduct.quantity = item.quantity
+        ordereproduct.product_price = item.product.price
+        ordereproduct.ordered = True
+        ordereproduct.save()
+
+        # Fetch variations from cart_item
+        cart_item = CartItem.objects.get(id=item.id) # get all cart items
+        product_variation = cart_item.variations.all() # get all variations of the item inside cart items
+        
+        ordereproduct = OrderedProduct.objects.get(id=ordereproduct.id) # get all products ordered
+        ordereproduct.variations.set(product_variation) # get the variations of the ordered products
+        ordereproduct.save() 
+
+
+        # Reduce the quantity of the sold products
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
+        
+    # Clear cart
+    CartItem.objects.filter(user=request.user).delete()
+
+    # Send order recieved email to customer
+    mail_subject = 'Thank you for your order!'
+    message = render_to_string('orders/confirmation/order_recieved_email.html', {
+        'user': request.user,
+        'order': order,
+    })
+    to_email = request.user.email
+    send_email = EmailMessage(mail_subject, message, to=[to_email])
+    send_email.send()
+
+    # Send order number and transaction id back to sendData method via JsonResponse
+    data = {
+        'order_number': order.order_number,
+        'transID': payment.payment_id,
+    }
+    return JsonResponse(data)
 
 
 def order_complete(request):
-    pass
+    order_number = request.GET.get('order_number')
+    transID = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_products = OrderedProduct.objects.filter(order_id=order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal += i.product_price * i.quantity
+
+        payment = Payment.objects.get(payment_id=transID)
+
+        context = {
+            'order': order,
+            'ordered_products': ordered_products,
+            'order_number': order.order_number,
+            'transID': payment.payment_id,
+            'payment': payment,
+            'subtotal': subtotal,
+        }
+        return render(request, 'orders/order_complete.html', context)
+    except (Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('home')
