@@ -9,7 +9,7 @@ from carts.models import CartItem
 from carts.views import _cart_id
 from orders . models import OrderedProduct
 
-from . models import ReviewRating
+from products . models import ReviewRating
 from . forms import ReviewForm
 
 # Create your views here.

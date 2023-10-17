@@ -118,19 +118,21 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="tabCommon mt-20">
-					<ul class="nav nav-tabs">
+					<!-- <ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#details" aria-expanded="true">Details</a></li>
 						<li class=""><a data-toggle="tab" href="#writereview" aria-expanded="false">Write a Review</a></li>
 						<li class=""><a data-toggle="tab" href="#reviews" aria-expanded="false">All Reviews</a></li>
-					</ul>
+					</ul> -->
 					<div class="tab-content patternbg">
 
-						<div id="details" class="tab-pane fade active in">
+						<div id="details">
 							<h4>Product Description</h4>
 							<p>{{single_product.description}}</p>
 						</div>
 
-						<div id="writereview" class="tab-pane fade">
+						<hr>
+
+						<div id="writereview" >
 							<div class="post-comments">	
 								<form action="{% url 'submit_review' single_product.id %}" method="POST">
 									{% csrf_token %}
@@ -183,10 +185,32 @@
 							</div>	
 						</div>
 
+						<hr>
 						{% for review in reviews %}
 						<!-- reviews -->
-						<div id="reviews" class="tab-pane fade">
+						<div id="reviews">
 							<div class="post-comments">
+								<header class="section-heading">
+									<h3>Customer Reviews</h3>
+									<div class="rating-star">
+										<span>
+											<i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}"
+												aria-hidden="true"></i>
+											<i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}"
+												aria-hidden="true"></i>
+											<i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o {% endif %}"
+												aria-hidden="true"></i>
+											<i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o {% endif %}"
+												aria-hidden="true"></i>
+											<i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o {% endif %}"
+												aria-hidden="true"></i>
+											<span>{{single_product.countReview}} reviews</span>
+										</span>
+									</div>
+								</header>
+								
+								<hr>
+								
 						    	<ul class="media-list comments-list m-bot-50 clearlist">
 								    <!-- Comment Item start-->
 								    <li class="media">
