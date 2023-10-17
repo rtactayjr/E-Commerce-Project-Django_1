@@ -121,7 +121,7 @@
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#details" aria-expanded="true">Details</a></li>
 						<li class=""><a data-toggle="tab" href="#writereview" aria-expanded="false">Write a Review</a></li>
-						<li class=""><a data-toggle="tab" href="#reviews" aria-expanded="false">All Reviews (3)</a></li>
+						<li class=""><a data-toggle="tab" href="#reviews" aria-expanded="false">All Reviews</a></li>
 					</ul>
 					<div class="tab-content patternbg">
 
@@ -183,6 +183,7 @@
 							</div>	
 						</div>
 
+						{% for review in reviews %}
 						<!-- reviews -->
 						<div id="reviews" class="tab-pane fade">
 							<div class="post-comments">
@@ -190,25 +191,42 @@
 								    <!-- Comment Item start-->
 								    <li class="media">
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="images/blog/avater-1.jpg" alt="" width="50" height="50" />
+								            <img class="media-object comment-avatar" src="{% static 'images/blog/avater-1.jpg' %}" alt="" width="50" height="50" />
 								        </a>
 								        <div class="media-body">
 								            <div class="comment-info">
+												
 								                <h4 class="comment-author">
-								                    <a href="#!">Jonathon Andrew</a>
+								                    <a href="#!">{{review.user.full_name}}</a>
 								                </h4>
-								                <time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
+
+								                <time datetime="2013-04-06T13:53">{{review.updated_at}}</time>
+
+												
 								            </div>
-								            <p>
-								                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod laborum minima, reprehenderit laboriosam officiis praesentium? Impedit minus provident assumenda quae.
-								            </p>
+											<div class="rating-star">
+												<span>
+													<i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}"
+														aria-hidden="true"></i>
+													<i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}"
+														aria-hidden="true"></i>
+													<i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}"
+														aria-hidden="true"></i>
+													<i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}"
+														aria-hidden="true"></i>
+													<i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}"
+														aria-hidden="true"></i>
+												</span>
+											</div>
+											<h6>{{review.subject}}</h6>
+								            <p>{{review.review}} </p>
 								        </div>
 								    </li>
 								    <!-- End Comment Item -->
 								</ul>
 							</div>
 						</div>
+						{% endfor %}
 
 					</div>
 				</div>
